@@ -6,7 +6,7 @@ var centerCity = document.getElementsByClassName("center-city")[0];
 var southPhilly = document.getElementsByClassName("south-philly")[0];
 var northPhilly = document.getElementsByClassName("north-philly")[0];
 var northernLiberties = document.getElementsByClassName("northern-liberties")[0];
-var locations = [westPhilly, centerCity, northPhilly, northernLiberties, southPhilly];
+var locations = document.getElementsByClassName("location");
 var searchText;
 var i = 0;
 var searchLocation;
@@ -19,11 +19,18 @@ submit.addEventListener("click", function(){
     searchYelp(searchText, searchLocation);
 });
 
-for (var i = 0; i < locations.length; i++) {
-    locations[i].addEventListener("click", function(){
-        searchLocation = locations[i];
+// for (var i = 0; i < locations.length; i++) {
+//     locations[i].addEventListener("click", function(){
+//         searchLocation = locations[i].;
+//     })
+// }
+
+[].forEach.call(locations, function(location){
+    location.addEventListener("click", function(){
+        searchLocation = location.innerHTML;
     })
-}
+})
+
 // westPhilly.addEventListener("click", function(){
 //     searchLocation = "west philly";
 // });
