@@ -1,8 +1,3 @@
-
-
-// - When a result is clicked, it opens the Yelp page for that business in a new window.
-// - When a user makes a new search, the old results go away and the new results  populate the page and are also clickable.
-
 var submit = document.getElementsByClassName("submit")[0];
 var search = document.getElementsByClassName("search-box")[0];
 var results = document.getElementsByClassName("results")[0];
@@ -11,49 +6,55 @@ var centerCity = document.getElementsByClassName("center-city")[0];
 var southPhilly = document.getElementsByClassName("south-philly")[0];
 var northPhilly = document.getElementsByClassName("north-philly")[0];
 var northernLiberties = document.getElementsByClassName("northern-liberties")[0];
+var locations = [westPhilly, centerCity, northPhilly, northernLiberties, southPhilly];
 var searchText;
 var i = 0;
-var searchLocation = "";
+var searchLocation;
 
 submit.addEventListener("click", function(){
-    if (searchLocation = ""){
+    if (searchLocation === ""){
         alert("Please click a neighborhood to search");
     }
-    searchText = search.value;
-    searchYelp(searchText);
-});
-westPhilly.addEventListener("click", function(){
-    searchLocation = "west philly";
-});
-centerCity.addEventListener("click", function(){
-    searchLocation = "center city";
-});
-southPhilly.addEventListener("click", function(){
-    searchLocation = "south philly";
-});
-northPhilly.addEventListener("click", function(){
-    searchLocation = "north philly";
-});
-northernLiberties.addEventListener("click", function(){
-    searchLocation = "northern liberties";
+    searchText = search.innerHTML;
+    searchYelp(searchText, searchLocation);
 });
 
-function searchYelp(input){
+for (var i = 0; i < locations.length; i++) {
+    locations[i].addEventListener("click", function(){
+        searchLocation = locations[i];
+    })
+}
+// westPhilly.addEventListener("click", function(){
+//     searchLocation = "west philly";
+// });
+// centerCity.addEventListener("click", function(){
+//     searchLocation = "center city";
+// });
+// southPhilly.addEventListener("click", function(){
+//     searchLocation = "south philly";
+// });
+// northPhilly.addEventListener("click", function(){
+//     searchLocation = "north philly";
+// });
+// northernLiberties.addEventListener("click", function(){
+//     searchLocation = "northern liberties";
+// });
+
+function searchYelp(term, location){
     $.ajax({
         url: "https://yelp-search.herokuapp.com/search",
         method: "GET",
         data: {
-            term: searchText,
-            location: searchLocation,
-            radius: 1000,
-            sort_by: "rating"
+            term: term,
+            location: location
+            // radius: 1000,
+            // sort_by: "rating"
 
         },
         success: function(response){
             console.log(response);
-
-            i = 0;
-            results.innerHTML = "";
+            // i = 0;
+            // results.innerHTML = "";
             listResults(response);
         }
 
