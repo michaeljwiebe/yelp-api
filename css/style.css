@@ -6,6 +6,10 @@ body {
   display: flex;
   flex-wrap: wrap; }
 
+.flex {
+  display: flex;
+  flex-wrap: wrap; }
+
 .location {
   font-size: 20px;
   background-color: lightgrey;

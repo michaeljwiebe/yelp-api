@@ -15,15 +15,10 @@ submit.addEventListener("click", function(){
     if (searchLocation === ""){
         alert("Please click a neighborhood to search");
     }
+    results.innerHTML = "";
     searchText = search.innerHTML;
     searchYelp(searchText, searchLocation);
 });
-
-// for (var i = 0; i < locations.length; i++) {
-//     locations[i].addEventListener("click", function(){
-//         searchLocation = locations[i].;
-//     })
-// }
 
 [].forEach.call(locations, function(location){
     location.addEventListener("click", function(){
@@ -31,37 +26,19 @@ submit.addEventListener("click", function(){
     })
 })
 
-// westPhilly.addEventListener("click", function(){
-//     searchLocation = "west philly";
-// });
-// centerCity.addEventListener("click", function(){
-//     searchLocation = "center city";
-// });
-// southPhilly.addEventListener("click", function(){
-//     searchLocation = "south philly";
-// });
-// northPhilly.addEventListener("click", function(){
-//     searchLocation = "north philly";
-// });
-// northernLiberties.addEventListener("click", function(){
-//     searchLocation = "northern liberties";
-// });
-
-function searchYelp(term, location){
+function searchYelp(searchText, searchLocation){
     $.ajax({
         url: "https://yelp-search.herokuapp.com/search",
         method: "GET",
         data: {
-            term: term,
-            location: location
-            // radius: 1000,
-            // sort_by: "rating"
+            term: searchText,
+            location: searchLocation,
+            radius: 1000,
+            sort_by: "rating"
 
         },
         success: function(response){
             console.log(response);
-            // i = 0;
-            // results.innerHTML = "";
             listResults(response);
         }
 
@@ -69,8 +46,10 @@ function searchYelp(term, location){
 }
 
 function listResults(inputObject){
+    i = 0;
+    results.innerHTML = "";
     inputObject.businesses.forEach(function(result){
-        results.innerHTML += "<div class='result result" + i + "'><h2><a href='" + result.url + "'>" + result.name + "</a></h2><h3>Rating: " + result.rating + "</h3><h4>Phone: " + result.display_phone + "</h4></a>";
+        results.innerHTML += "<div class='flex result result" + i + "'><h2><a href='" + result.url + "'>" + result.name + "</a></h2><h3>Rating: " + result.rating + "</h3><h4>Phone: " + result.display_phone + "</h4></a>";
         i += 1;
     });
 }
